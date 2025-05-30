@@ -1,0 +1,13 @@
+   .height1 {
+            height:40px;
+            width:250px;
+        }
+
+        .height2 {
+            width:500px;
+            height:300px;
+            /*align-items:center;*/
+            margin: 0 auto; 
+
+            
+        }

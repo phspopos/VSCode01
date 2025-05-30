@@ -1,0 +1,51 @@
+ .td1 {
+            background-color:rgb(241, 235, 235);
+            font-size: 30;            
+            width:120px;
+            height:100;
+            font-weight:bold;
+        }
+
+        .check {
+            border:none;
+            width:50px;
+            height:100;
+            background-color:black;
+            color:white; 
+        }
+
+        .point {
+            color:red;
+        }
+
+        .insert {
+            border:none;
+            background-color:red;
+            color:white;
+            border-radius: 3px 3px 3px 3px;            
+            font-size:20px;
+            width:80px; height:50px;
+        }
+
+        .reset {
+            border:none;
+            background-color:black;
+            color:white;
+            border-radius: 3px 3px 3px 3px;
+            /*
+            border-left-width: 50px;
+            border-right-width: 50px;
+            */
+            font-size:20px;
+            width:80px; height:50px;
+            
+        }
+        
+        .spansize {
+            width:80px;
+            height:100px;
+        }
+
+        .contWrap {
+            white-space : pre-wrap;
+        }

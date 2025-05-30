@@ -1,0 +1,79 @@
+//import {useState} from 'react';
+import './App.css';
+
+function Header( props ){
+  console.log('props', props.title );
+  return (<>
+    <header>
+      <h2>{ props.title }</h2>
+    </header>
+  </>);
+}
+
+function Nav(){
+  return (<>
+    <nav>
+      <a href="/">글쓰기</a>
+    </nav>
+  </>);
+}
+
+function Article( props ){
+const lists = [];
+
+for( let i = 0; i < props.boardData.length; i++ ){
+  let row = props.boardData[i];
+  lists.push(
+    <tr key={ row.no }>
+        <td className="cen">{row.no}</td>
+        <td><a href={'/read/'+row.no}>{row.title}</a></td>
+        <td className="cen">{row.writer}</td>
+        <td className="cen">{row.date}</td>
+    </tr>
+  );
+}
+
+  return (<>
+    <article>
+      
+      <table id="boardTable">
+        <thead>
+          <tr>
+            <th>No</th>
+            <td>제목</td>
+            <td>작성자</td>
+            <td>날짜</td>
+          </tr>
+        </thead>
+        <tbody>
+          {lists}
+        </tbody>
+      </table>
+    </article>
+  
+  </>);
+}
+
+function App(){
+
+  const boardData = [
+    { no:1, title:'오늘은 React공부하는날', writer:'낙짜샘', date:'2023-01-01'
+      ,contents:'React를 뽀개봅시당' },
+      { no:2, title:'어제는 Javascript공부해씸', writer:'유겸이', date:'2023-03-03'
+      ,contents:'Javascript는 할게 너무 많아요' },
+      { no:3, title:'내일은 Project해야징', writer:'개똥이', date:'2023-05-05'
+      ,contents:'Project는 뭘 만들어 볼까?' }
+  ];
+ 
+  return (<>
+
+    <div className="App">      
+        <Header title="게시판-목록(props)"></Header>
+        <Nav></Nav>
+        <Article boardData={boardData}></Article>
+    </div>
+
+  </>);
+}
+
+export default App

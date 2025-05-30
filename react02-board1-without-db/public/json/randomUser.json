@@ -1,0 +1,290 @@
+{
+  "results": [
+    {
+      "gender": "male",
+      "name": {
+        "title": "Mr",
+        "first": "Ben",
+        "last": "Holland"
+      },
+      "location": {
+        "street": {
+          "number": 950,
+          "name": "Locust Rd"
+        },
+        "city": "Queanbeyan",
+        "state": "Tasmania",
+        "country": "Australia",
+        "postcode": 8618,
+        "coordinates": {
+          "latitude": "-88.5276",
+          "longitude": "-109.7235"
+        },
+        "timezone": {
+          "offset": "+5:45",
+          "description": "Kathmandu"
+        }
+      },
+      "email": "ben.holland@example.com",
+      "login": {
+        "uuid": "16b17bba-8dbe-4a72-87f9-4f63fca42da7",
+        "username": "whitemeercat377",
+        "password": "hondas",
+        "salt": "I2S3QEir",
+        "md5": "b35ea4a7eaebd04303e29b48e6c5f9e0",
+        "sha1": "c7cf8e3b9340048209d2e9449f301e06a8dd220e",
+        "sha256": "f1d75c30f9c19cdaf475cf5790772b5d1d3720582dfd5c85dfeeda429649d4f6"
+      },
+      "dob": {
+        "date": "1999-01-24T18:44:45.057Z",
+        "age": 26
+      },
+      "registered": {
+        "date": "2010-02-21T13:37:36.833Z",
+        "age": 15
+      },
+      "phone": "09-7621-8647",
+      "cell": "0457-324-200",
+      "id": {
+        "name": "TFN",
+        "value": "694375120"
+      },
+      "picture": {
+        "large": "https://randomuser.me/api/portraits/men/19.jpg",
+        "medium": "https://randomuser.me/api/portraits/med/men/19.jpg",
+        "thumbnail": "https://randomuser.me/api/portraits/thumb/men/19.jpg"
+      },
+      "nat": "AU"
+    },
+    {
+      "gender": "male",
+      "name": {
+        "title": "Monsieur",
+        "first": "Jens",
+        "last": "Vincent"
+      },
+      "location": {
+        "street": {
+          "number": 4205,
+          "name": "Rue Bataille"
+        },
+        "city": "Widnau",
+        "state": "Basel-Landschaft",
+        "country": "Switzerland",
+        "postcode": 5035,
+        "coordinates": {
+          "latitude": "37.7874",
+          "longitude": "11.5116"
+        },
+        "timezone": {
+          "offset": "-9:00",
+          "description": "Alaska"
+        }
+      },
+      "email": "jens.vincent@example.com",
+      "login": {
+        "uuid": "c547410a-e76c-4923-8d23-7f166f2af99f",
+        "username": "ticklishmouse221",
+        "password": "aliens",
+        "salt": "0IK0MOcA",
+        "md5": "fb2373f48d9d6dfe36ce2f423f6ddd10",
+        "sha1": "da8de8a1f2a80f18088c3a59c8e324dc9185864f",
+        "sha256": "2f05c46fd950c4962b2294162a7c9b3e0fedfed83818479f30d9732e57a134c2"
+      },
+      "dob": {
+        "date": "1958-09-28T12:14:42.397Z",
+        "age": 66
+      },
+      "registered": {
+        "date": "2010-06-13T18:27:33.361Z",
+        "age": 14
+      },
+      "phone": "078 612 19 40",
+      "cell": "079 826 52 67",
+      "id": {
+        "name": "AVS",
+        "value": "756.6168.6526.92"
+      },
+      "picture": {
+        "large": "https://randomuser.me/api/portraits/men/58.jpg",
+        "medium": "https://randomuser.me/api/portraits/med/men/58.jpg",
+        "thumbnail": "https://randomuser.me/api/portraits/thumb/men/58.jpg"
+      },
+      "nat": "CH"
+    },
+    {
+      "gender": "female",
+      "name": {
+        "title": "Mrs",
+        "first": "Guillermina",
+        "last": "Robledo"
+      },
+      "location": {
+        "street": {
+          "number": 7890,
+          "name": "Avenida Baja California Sur"
+        },
+        "city": "San Francisco Cheje",
+        "state": "Campeche",
+        "country": "Mexico",
+        "postcode": 90219,
+        "coordinates": {
+          "latitude": "20.7367",
+          "longitude": "52.9662"
+        },
+        "timezone": {
+          "offset": "0:00",
+          "description": "Western Europe Time, London, Lisbon, Casablanca"
+        }
+      },
+      "email": "guillermina.robledo@example.com",
+      "login": {
+        "uuid": "061da236-979a-4341-a60c-d3a84bca2ad9",
+        "username": "organicfish583",
+        "password": "labia",
+        "salt": "bZTWBOFg",
+        "md5": "c54af5051e0d6f87d67d5f189b9ec5fa",
+        "sha1": "2259fbb838591c95f054ad57b9b2cad6e035cf82",
+        "sha256": "5577236a045477fcfda438f1de37893e7722d60222bce6117a5c03268badb632"
+      },
+      "dob": {
+        "date": "1955-10-26T23:40:42.744Z",
+        "age": 69
+      },
+      "registered": {
+        "date": "2009-12-21T05:34:33.755Z",
+        "age": 15
+      },
+      "phone": "(647) 907 2583",
+      "cell": "(615) 108 5220",
+      "id": {
+        "name": "NSS",
+        "value": "11 13 26 4553 7"
+      },
+      "picture": {
+        "large": "https://randomuser.me/api/portraits/women/20.jpg",
+        "medium": "https://randomuser.me/api/portraits/med/women/20.jpg",
+        "thumbnail": "https://randomuser.me/api/portraits/thumb/women/20.jpg"
+      },
+      "nat": "MX"
+    },
+    {
+      "gender": "female",
+      "name": {
+        "title": "Miss",
+        "first": "Magdalena",
+        "last": "Gallardo"
+      },
+      "location": {
+        "street": {
+          "number": 9968,
+          "name": "Calle de Arganzuela"
+        },
+        "city": "Alcalá de Henares",
+        "state": "Cantabria",
+        "country": "Spain",
+        "postcode": 53148,
+        "coordinates": {
+          "latitude": "8.5813",
+          "longitude": "-101.7122"
+        },
+        "timezone": {
+          "offset": "+3:30",
+          "description": "Tehran"
+        }
+      },
+      "email": "magdalena.gallardo@example.com",
+      "login": {
+        "uuid": "ae4a96c5-7c1a-41e0-9bc6-a8189483637c",
+        "username": "tinyostrich398",
+        "password": "megane",
+        "salt": "RJ3hdNT8",
+        "md5": "0c04da510ea3e0e50ccb44b50a07fa8d",
+        "sha1": "113b565ef8437f4ef57045808e883a3e2cd8cc72",
+        "sha256": "4e49662430c461bff02f75339750ad324d555f669f1cecc14a3666f048cc9c9c"
+      },
+      "dob": {
+        "date": "1986-07-23T00:38:22.570Z",
+        "age": 38
+      },
+      "registered": {
+        "date": "2019-06-17T03:59:44.548Z",
+        "age": 5
+      },
+      "phone": "921-326-083",
+      "cell": "671-561-787",
+      "id": {
+        "name": "DNI",
+        "value": "52352009-V"
+      },
+      "picture": {
+        "large": "https://randomuser.me/api/portraits/women/0.jpg",
+        "medium": "https://randomuser.me/api/portraits/med/women/0.jpg",
+        "thumbnail": "https://randomuser.me/api/portraits/thumb/women/0.jpg"
+      },
+      "nat": "ES"
+    },
+    {
+      "gender": "male",
+      "name": {
+        "title": "Mr",
+        "first": "Clésio",
+        "last": "Moreira"
+      },
+      "location": {
+        "street": {
+          "number": 7131,
+          "name": "Rua Boa Vista "
+        },
+        "city": "Araguaína",
+        "state": "Amazonas",
+        "country": "Brazil",
+        "postcode": 81295,
+        "coordinates": {
+          "latitude": "78.5483",
+          "longitude": "-166.8332"
+        },
+        "timezone": {
+          "offset": "0:00",
+          "description": "Western Europe Time, London, Lisbon, Casablanca"
+        }
+      },
+      "email": "clesio.moreira@example.com",
+      "login": {
+        "uuid": "c39e5292-1d83-4401-a154-96895c4d9429",
+        "username": "redbear201",
+        "password": "deer",
+        "salt": "JrrGFfWN",
+        "md5": "3a1ce4df28acbc94298a45505e00bfbc",
+        "sha1": "d5d92d7875aec5e71ecc0a7ce9ffe90962030666",
+        "sha256": "b0d37cbeecae7ccd4fc76675ebb537745c86e4cbd9a3ab41868d2e0981b80ca0"
+      },
+      "dob": {
+        "date": "1991-06-03T00:26:55.737Z",
+        "age": 33
+      },
+      "registered": {
+        "date": "2021-08-11T15:16:54.316Z",
+        "age": 3
+      },
+      "phone": "(25) 2028-4424",
+      "cell": "(48) 5938-0145",
+      "id": {
+        "name": "CPF",
+        "value": "841.130.561-07"
+      },
+      "picture": {
+        "large": "https://randomuser.me/api/portraits/men/45.jpg",
+        "medium": "https://randomuser.me/api/portraits/med/men/45.jpg",
+        "thumbnail": "https://randomuser.me/api/portraits/thumb/men/45.jpg"
+      },
+      "nat": "BR"
+    }
+  ],
+  "info": {
+    "seed": "a5c0c76f3c96280c",
+    "results": 5,
+    "page": 1,
+    "version": "1.4"
+  }
+}
