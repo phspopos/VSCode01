@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 //import {firestore} from './firestoreConfig';
 import { firestore } from '../../firestoreConfig';
 import { collection, deleteDoc, doc, setDoc, getDoc, getDocs, query, where } from 'firebase/firestore';
+import '../../modalWrite.css';
 
 //오늘의 날짜를 만들기 위한 함수
   const nowDate = () => {
@@ -43,9 +44,11 @@ function Write(){
   let navigete = useNavigate();
 
   return(<>
+  <div className="form-container">
   <header>
     <h2>게시판 - 작성</h2>
   </header>
+  {/* style={{ textAlign: 'left', padding: '10px', backgroundColor: '#f8f9fa' }} */}
   <nav>
     <Link to="/list">목록</Link>
   </nav>
@@ -53,19 +56,50 @@ function Write(){
     <form onSubmit={ (e) => {
       e.preventDefault();
 
-      let collection = e.target.collection.value;
-      let id = e.target.id.value;
-      let pass = e.target.pass.value;
-      let writer = e.target.writer.value;
-      let title = e.target.title.value;
-      let contents = e.target.contents.value;
+      let f = e.target;
+      
+      let collection = f.collection.value;
+      let id = f.id.value;
+      let pass = f.pass.value;
+      let writer = f.writer.value;
+      let title = f.title.value;
+      let contents = f.contents.value;
 
-      if( collection === '' ){ alert("컬렉션명을 입력해주세요"); return; }
-      if( id === '' ){ alert("아이디를 입력해주세요"); return; }
-      if( pass === '' ){ alert("패스워드를 입력해주세요"); return; }
-      if( writer === '' ){ alert("작성자를 입력해주세요"); return; }
-      if( title === '' ){ alert("제목을 입력해주세요"); return; }      
-      if( contents === '' ){ alert("컨텐츠명을 입력해주세요"); return; }      
+      if( collection === '' ) { 
+        alert("컬렉션명을 입력해주세요");
+        f.collection.focus();
+        return false;
+      }
+
+      if( id === '' ){
+        alert("아이디를 입력해주세요");
+        f.id.focus();
+        return false;
+      }
+
+      if( pass === '' ){
+        alert("패스워드를 입력해주세요"); 
+        f.pass.focus();
+        return false; 
+      } 
+
+      if( writer === '' ){ 
+        alert("작성자를 입력해주세요");
+        f.writer.focus();
+        return false;
+      }
+
+      if( title === '' ){
+        alert("제목을 입력해주세요");
+        f.title.focus();
+        return false; 
+      }
+
+      if( contents === '' ){
+        alert("컨텐츠명을 입력해주세요"); 
+        f.contents.focus();
+        return false; 
+      }      
 
       console.log( collection, id, pass, writer, title, contents );
 
@@ -82,7 +116,7 @@ function Write(){
       
 
     }}>
-      <table id="boardTable">
+      <table id="boardTable" className="input-table">
         <tbody>
           <tr>
             <th>컬렉션(테이블)</th>
@@ -106,13 +140,15 @@ function Write(){
           </tr>
           <tr>
             <th>내용</th>
-            <td><textarea name="contents" cols="22" rows="3"></textarea></td>
+            <td><textarea name="contents" cols="22" rows="8"></textarea></td>
           </tr>
         </tbody>
       </table>
-        <input type="submit" value="전송"/>
+        <input type="submit" value="등록"/>
     </form>
     </article> 
+  </div>
+
   </>);
 
   

@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { realtime } from "../firestoreConfig";
 import { ref, onValue } from "firebase/database";
+import { NavLink } from "react-router-dom";
 import Navi from "./Navi";
+
 
 function Listener(){
   
@@ -12,7 +14,7 @@ function Listener(){
 
   //'users' 노드를 참조한 객체 생성
   //리스너( 이벤트 수신 대기 )
-  const dbRef = ref( realtime, 'users');
+  const dbRef = ref( realtime, 'member');
 
   //1차 렌더링 후 내부의 코드 실행을 위한 생명주기 훅 선언
   useEffect ( () => {
@@ -32,12 +34,15 @@ function Listener(){
         const childData = childSnapshot.val();
         console.log( childKey, childData );
 
+        // <Link to={'/modalView/'+doc.id+"/"+memberInfo.no} >{memberInfo.title}</Link>
         //화면에 출력할 내용을 만듬
         showTr.push(
-          <tr>
+          <tr key={childKey}>
             <td>{childKey}</td>
-            <td>{childData.name}</td>
-            <td>{childData.pass}</td>
+            <td>{childData.id}</td>
+            <td>{childData.pw}</td>
+            <td><NavLink to={"/chatEdit/"+ childData.id}>{childData.name}</NavLink></td>
+            <td>{childData.nicName}</td>           
             <td>{childData.fireKey}</td>
           </tr>
         );
@@ -53,14 +58,17 @@ function Listener(){
   return(<>
     <div className="App">
       <Navi></Navi>
-      <h2>Firebase - Realtime Database App</h2>
-      <h3>02.Listener</h3>
+      {/* <h2>Firebase - Realtime Database App</h2> */}
+      {/* <h3>02.Listener</h3> */}
+      <h3>상세보기 리스트</h3>
       <table border="1" className="table table-bordered">
         <thead>
           <tr className="text-center">
+            <th>코드</th>
             <th>아이디</th>
-            <th>이름</th>
             <th>패스워드</th>
+            <th>이름</th>
+            <th>닉네임</th>
             <th>고유키</th>
           </tr>
         </thead>

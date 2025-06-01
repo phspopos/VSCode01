@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 //import {firestore} from './firestoreConfig';
 import { firestore } from '../firestoreConfig';
 import { collection, deleteDoc, doc, setDoc, getDoc, getDocs, query, where } from 'firebase/firestore';
+import "../navi.css"
 
 
 //3개의 매개변수는 순서대로 쿠키명, 쿠키값, 유효시간(날짜단위)
@@ -96,7 +97,7 @@ function TopNavi(props) {
           <NavLink to="/">Home</NavLink>&nbsp;&nbsp;
           <NavLink to="/memberInsert">회원가입</NavLink>&nbsp;&nbsp;
           <NavLink to="/login">로그인</NavLink>&nbsp;&nbsp;
-          <NavLink to="/list">게시판1</NavLink>&nbsp;&nbsp;
+          <NavLink to="/list">게시판</NavLink>&nbsp;&nbsp;
           <NavLink to="/memberList">회원정보리스트</NavLink>&nbsp;&nbsp;
           <NavLink to="/modalWrite">Q&A등록하기</NavLink>&nbsp;&nbsp;
           <NavLink to="/modalList">Q&A목록보기</NavLink>&nbsp;&nbsp;   
@@ -105,4 +106,4 @@ function TopNavi(props) {
       </nav>
   </>); 
 }
-export default TopNavi ;
+export default TopNavi;

@@ -159,7 +159,7 @@ let id = result.id;
         </tr>
         <tr>          
           <th>주소</th>
-          <td style={{ textAlign: "left" }}>{ result.addr1 + result.addr2 }</td>
+          <td style={{ textAlign: "left" }}>{ result.addr1 +" "+ result.addr2 }</td>
         </tr>
         <tr>
           <th>이메일</th>

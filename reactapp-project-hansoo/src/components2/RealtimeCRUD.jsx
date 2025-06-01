@@ -20,14 +20,14 @@ function RealtimeCRUD() {
     var year = dateObj.getFullYear();
     var month = months[dateObj.getMonth()];
     var day = ("0"+dateObj.getDate()).slice(-2);
-    var hours = dateObj.getHours();
-    var min = dateObj.getMinutes();    
+    var hours = ("0"+dateObj.getHours() ).slice(-2);
+    var min = ("0"+dateObj.getMinutes()).slice(-2);    
     //console.log( dateObj.getHours() +" : "+ dateObj.getMinutes() + " : " + dateObj.getSeconds() );
     let ampm = hours >= 12 ? 'PM' : 'AM';
     
     console.log( day + month + hours + ":" + min + ampm );
     //return year + "-" + month + "-" + day;
-    return day + month + hours + ":" + min + ampm;
+    return day +" "+ month +" "+ hours + " : " + min +" "+ ampm;
 
   }
 
@@ -123,7 +123,8 @@ function RealtimeCRUD() {
   }
 
 
-  function writeUserInsert( userId, userName, userPass){
+  //id, pw, name, nicName ------ 여기서 부터 현재 코딩 ----------------------
+  function writeUserInsert( userId, userPass,  userName, userNicName  ){
     //새로운 게시물 등록을 위한 key값을 생성한다. -o3ygh.. 이런식
     const newPostKey = push( child( ref(realtime), 'tempValue')).key;
     /*
@@ -131,9 +132,11 @@ function RealtimeCRUD() {
       입력한다. 만약 ID가 동일하면 덮어쓰기 (수정)된다.
     */ 
 
-    set( ref( realtime, 'users/'+userId ), {
+    set( ref( realtime, 'member/'+userId ), {
+      id: userId,
+      pw: userPass,
       name: userName,
-      pass: userPass,
+      nicName: userNicName,
       fireKey : newPostKey,
       date : nowDate(),
     }); 
@@ -155,12 +158,50 @@ function RealtimeCRUD() {
   return(<>
     <div className="form-container">
       <Navi />
-      <h2>Firebas - Realtime Database App</h2>
+      {/* <h2>Firebas - Realtime Database App</h2> */}
       <h3>사용자 등록</h3>
       <form onSubmit={ (e) => {
         e.preventDefault();
+        var f = e.target;      
+       
+        var id = f.id.value;
+        var pw = f.pw.value;
+        var name = f.name.value;
+        var nicName = f.nicName.value;
+
+        if (id == '') {
+         alert("아이디를 입력해주세요");
+         f.id.focus();
+         return false;
+       }
+
+       if( pw == '' ){
+        alert("패스워드를 입력해 주세요");
+        f.pw.focus();
+        return false;
+       }
+
+       if( name == '' ){
+        alert("이름을 입력해 주세요");
+        f.name.focus();
+        return false;
+       }
+      
+       if( nicName == '' ){
+        alert("별칭을 입력해 주세요");
+        f.nicName.focus();
+        return false;
+       }
 
         
+        console.log( id + ":" + pw + ":" + name + ":" + nicName  );
+        
+        writeUserInsert( id, pw, name, nicName );
+
+        f.id.value = '';
+        f.pw.value = '';
+        f.name.value = '';
+        f.nicName.value = '';
 
       }}>
         <table border="1" className="input-table">
@@ -182,7 +223,7 @@ function RealtimeCRUD() {
               <td><input type='text' name='nicName' /></td>
             </tr>            
             <tr>            
-              <td colSpan="2"><input type='button' value="사용자등록" style={{ width: '100px', height: '50px', fontSize: '16px' }} /></td>
+              <td colSpan="2"><input type='submit' value="사용자등록" style={{ width: '100px', height: '50px', fontSize: '16px' }} /></td>
             </tr>
           </tbody>
         </table>

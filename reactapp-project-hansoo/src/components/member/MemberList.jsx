@@ -1,5 +1,5 @@
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 //import {firestore} from './firestoreConfig';
 import { firestore } from '../../firestoreConfig';
@@ -10,7 +10,95 @@ import '../../memberList.css';
 function MemberList (){
 
   const [ showData, setShowData ] = useState([]);
+  let navigate =  useNavigate();
 
+
+  const getCollectionSeach = async ( search, sName ) => {
+    
+    //  if( sName == null ){
+    //    navigate("/memberList");
+    //  }
+
+    let getRows = [];
+
+    if( search === "id" ){
+
+      const docRef = doc( firestore, "members2", sName );
+      const docSnap = await getDoc(docRef);
+
+      if( docSnap.exists() ){
+        console.log("Document data : ", docSnap.data() );
+        getRows.push( docSnap.data() );
+      
+      }else{
+        console.log("No such document!");
+      }
+
+    }else if( search === "name" ){
+      
+      const memberRef = collection( firestore, "members2");
+      console.log("memberRef", memberRef );
+      
+      const q = query( memberRef, where("name","==",sName ));
+      const querySnapshot = await getDocs(q);
+      console.log("Document data : ", querySnapshot);
+
+      querySnapshot.forEach( (doc) => {
+        console.log("반복인출", doc.id, doc.data() );
+        getRows.push( doc.data() );
+      });
+
+    }else if( search === "phone3" ){
+      
+      const memberRef = collection( firestore, "members2");
+      console.log("memberRef", memberRef );
+      
+      const q = query( memberRef, where("phone3","==",sName ));
+      const querySnapshot = await getDocs(q);
+      console.log("Document data : ", querySnapshot);
+
+      querySnapshot.forEach( (doc) => {
+        console.log("반복인출", doc.id, doc.data() );
+        getRows.push( doc.data() );
+      });
+    }
+
+    console.log(" 값 1111 "+ getRows );
+    let trArray = [];
+   
+   // console.log("getRows", getRows);
+
+    /*
+    getRows.forEach( (row) => {
+      trArray.push(
+         <tr key={row.id}>
+          <td className='cen'>{row.id}</td>
+          <td className='cen'>{row.pass}</td>
+          <td className='cen'>{row.name}</td>
+          <td className='cen'>{row.regdate}</td>
+         </tr> 
+      );
+    });
+    */
+
+    getRows.forEach( (row) => {
+      trArray.push(
+        <tr key={row.id}>          
+          <td>{row.id}</td>
+          <td>{row.pw}</td>
+          <td>{row.name}</td>
+          <td><Link to={'/memberView/'+row.id} >{row.addr1}</Link></td>
+          <td>{row.phone1 + "-" + row.phone2 + "-" + row.phone3 }</td>
+        </tr>
+      );
+    });
+
+    setShowData(trArray);
+
+
+  }
+
+  ///////////////////////////////////////////////////
 
   useEffect( () => { 
   
@@ -50,11 +138,69 @@ function MemberList (){
 
 }, [setShowData]);
 
-  
+
+   const list = () => {
+    alert("호출되나");
+    //navigate("");
+    navigate("/memberList");
+   }
+
 
   return(<>
 
 <div className="board-container">
+    {/* ------------------------------------- */}
+      <form onSubmit={ (e) => {
+        e.preventDefault();
+
+        let search = e.target.search.value;
+        let sName = e.target.sName.value;
+
+        console.log( search + " = " + sName );
+
+        // //getCollection( sf, ss );
+        // if( sName == null ){
+        //   getCollection();
+        // }else{
+          
+        // }
+        getCollectionSeach(search, sName);
+        
+
+      }}>
+        <div id='myForm' style={{ textAlign: 'center' }}>
+          <select name='search' style={{
+                  padding: '6px 12px',
+                  fontSize: '14px',
+                  border: '1px solid #ccc',
+                  borderRadius: '4px',
+                  backgroundColor: 'white',    
+                  backgroundPosition: 'right 10px center',
+                  backgroundSize: '16px',
+                  cursor: 'pointer',
+          }}>
+            <option value="id" size="100">아이디</option>
+            <option value="name">이름</option>
+            <option value="phone3">전화번호 뒷자리</option>
+          </select>&nbsp;&nbsp;&nbsp;
+          
+          <input type='text' name='sName' style={{ width: '150px', height: '25px', fontSize: '16px' }}/>&nbsp;&nbsp;&nbsp;
+          <button type='submit' className='btn btn-secondary'>조회</button>&nbsp;&nbsp;&nbsp;
+          {/* <NavLink to="/memberList">회원정보리스트</NavLink>&nbsp;&nbsp; */}
+          {/* <button type='button' onClick={list} className='btn btn-secondary'>목록</button>&nbsp;&nbsp;&nbsp; */}
+          <a href="/memberList"  style={{
+                                          display: 'inline-block',
+                                          padding: '8px 16px',
+                                          backgroundColor: '#6c757d',  // Bootstrap의 btn-secondary 색
+                                          color: 'white',
+                                          textDecoration: 'none',
+                                          borderRadius: '4px',
+                                          fontSize: '14px',
+                                          border: 'none'
+                                        }}>회원목록으로</a>
+        </div>
+      </form>
+      {/* ------------------------------------- */}
 
       <h2>게시판</h2>
       <table className="board-table">

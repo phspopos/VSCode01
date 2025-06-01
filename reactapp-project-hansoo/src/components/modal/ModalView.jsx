@@ -192,18 +192,18 @@ function CommentList(props) {
   const [ contents2, setContents2 ] = useState('');
 
   
-const modalDelete = async (p_id) => {
-       
-       if( confirm("삭제하시겠습니까") ){
-          await deleteDoc( doc( firestore, "comment", p_id ));
-          //navigate("/list");
-          props.setBool(!props.bool);
+  const modalDelete = async (p_id) => {
         
-        }else{
-          //navigate("/eidt/"+params.idx);
-          //navigate(-1);
-        }
-}
+        if( confirm("삭제하시겠습니까") ){
+            await deleteDoc( doc( firestore, "comment", p_id ));
+            //navigate("/list");
+            props.setBool(!props.bool);
+          
+          }else{
+            //navigate("/eidt/"+params.idx);
+            //navigate(-1);
+          }
+  }
 
   const getLike = async (p_id) => {
 
@@ -410,7 +410,7 @@ const modalDelete = async (p_id) => {
                 <button className="btn btn-outline-danger btn-sm" onClick={() => modalDelete(row.id)}>삭제</button>
               </div>
             </div>
-            <p className="mt-2 mb-0">
+            <p className="mt-2 mb-0 contWrap">
               {row.contents}
             </p>
           </li>

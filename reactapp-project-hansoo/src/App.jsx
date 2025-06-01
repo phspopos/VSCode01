@@ -20,7 +20,8 @@ import Home from './components/Home';
 import TopNavi from './components/TopNavi';
 import MemberView from './components/member/MemberView';
 import MemberEdit from './components/member/MemberEdit';
-import ModalWrite from './components/modal/modalWrite';
+//import ModalWrite from './components/modal/modalWrite';
+import ModalWrite from './components/modal/ModalWrite';
 import ModalList from './components/modal/ModalList';
 import ModalView from './components/modal/ModalView';
 import ModalEdit from './components/modal/ModalEdit';
@@ -32,8 +33,8 @@ import RealtimeCRUD from './components2/RealtimeCRUD';
 import Listener from './components2/Listener';
 import ChatStart from './components2/ChatStart';
 import ChatMessage from './components2/ChatMessage';
-
-
+import ChatLogin from './components2/ChatLogin';
+import ChatEdit from './components2/ChatEdit';
 
 function App() {  
   
@@ -47,7 +48,10 @@ function App() {
           {/* <Route path="/real" element={ <RealtimeCRUD />} /> */}
           <Route path="/crud" element={ <RealtimeCRUD />} />
           <Route path="/listener" element={<Listener />} />
+          <Route path="/chatLogin" element={<ChatLogin />} />
+          <Route path="/chatEdit/:idx" element={<ChatEdit />} />
           
+
           <Route path="/chat">
             <Route index element={<ChatStart />} />
             <Route path="talk" element={<ChatMessage/>} />

@@ -6,11 +6,37 @@ import { realtime } from '../firestoreConfig';
 //리얼타임 사용을 위한 함수 임포트
 import { onValue, ref, set } from 'firebase/database';
 import { getDatabase, child, get, push, update, remove } from 'firebase/database';
-import Navi from './Navi';
+//import Navi from './Navi';
 //React에 서 제공하는 Hooks
 import { useEffect, useRef, useState } from 'react';
 //Router에서 제공하는 Hooks
 import { useSearchParams } from 'react-router-dom';
+import chatBg from '../images/chat1.jpg';
+import faceIcon from '../images/face.jpg';
+
+
+//오늘의 날짜를 만들기 위한 함수
+  const nowDate = () => {
+
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+    let dateObj = new Date();
+    var year = dateObj.getFullYear();
+    var month = months[dateObj.getMonth()];
+    var day = ("0"+dateObj.getDate()).slice(-2);
+    var hours = ("0"+dateObj.getHours() ).slice(-2);
+    var min = ("0"+dateObj.getMinutes()).slice(-2);    
+    //console.log( dateObj.getHours() +" : "+ dateObj.getMinutes() + " : " + dateObj.getSeconds() );
+    let ampm = hours >= 12 ? 'PM' : 'AM';
+    
+    console.log( day + month + hours + ":" + min + ampm );
+    //return year + "-" + month + "-" + day;
+    return day +" "+ month +" "+ hours + " : " + min +" "+ ampm;
+
+  }
+
+
 
 //스크롤바를 최하단으로 내려주기 위한 JS함수
 const scrollTop = (chatWindow) => {
@@ -24,6 +50,14 @@ function ChatMessage(){
 
   //쿼리스트링으로 전달된 파라미터를 조작할때 사용하는 라우터 훅
   const [ searchParams, setSearchParams ] = useSearchParams();
+
+  /////////////////////////////////////
+  const [ result , setResult ] = useState([]);
+  const [ bool, setBool ] = useState(true);
+  const [ date2, setDate2 ] = useState('');
+  const [ nicName2, setNicName ] = useState('');
+
+  
   //방명, 대화창을 파라미터로 얻어온다.
   const roomId = searchParams.get('roomId');
   const userId = searchParams.get('userId');
@@ -45,7 +79,8 @@ function ChatMessage(){
     */
     set( ref( realtime, chatRoom+"/"+newPostKey),{
       id: chatId,
-      message: chatMessage
+      message: chatMessage,
+      date: nowDate(),
     });
     console.log('입력성공');
   }
@@ -57,10 +92,70 @@ function ChatMessage(){
   const dbRef = ref( realtime, roomId );
   console.log("디비알이에프");
 
-  useEffect ( () => {
 
-    //리스너 생성. 새로운 대화내역이 확인되는 즉시 이벤트가 발생된다.
+
+
+
+  /*
+  useEffect ( () => {
+    
+
+  const readUserData = async() => {
+    //function readUserData( userId ){
+    //데이터베이스 객체 얻어오기
+    const dbRef = ref( getDatabase() );
+    //console.log('111'+ dbRef );
+    //노드에 등록된 아이디가 있는지 확인한 후 데이터를 가져온다.
+    console.log('유저아이디 : ===' + userId );
+    await get( child( dbRef, `member/${userId}`)).then( (snapshot) => {
+            
+      if( snapshot.exists() ){
+        console.log('들어온다======.');
+        //데이터가 존재하는 경우 콘솔에 출력한다.
+        //console.log("값이다. ~~~"+ snapshot.val().id );
+        //conso
+        //setResult(snapshot.val());
+        setResult(snapshot.val());
+        console.log(' 레졸트 에 값 ' + result);
+        //let memberInfo = snapshot.val();
+        
+        setDate2( snapshot.val().date );
+        setNicName( snapshot.val().nicName );
+        console.log(" 111 : "+date2);
+        console.log(" 222 : "+nicName2);
+        
+        //console.log("리졸트~~~~ : " + result.id);        
+        
+        //let memberInfo = snapshot.val();
+
+        //console.log("아이디 :: ~~"+ memberInfo.id );
+
+        //setResult( memberInfo );
+
+        //setBool(!bool);
+
+      }else{
+        console.log("No data available");
+      }
+
+      })
+      .catch( ( error ) => {
+        console.error( error );
+      });
+    }     
+
+    readUserData();
+   
+    // if( bool ){
+    //   readUserData();
+    // }
+     
+    
+
+  //리스너 생성. 새로운 대화내역이 확인되는 즉시 이벤트가 발생된다.
     onValue( dbRef, (snapshot) => {
+      
+      //readUserData();
       
       let showDiv = [];
 
@@ -72,33 +167,107 @@ function ChatMessage(){
 
       //대화내용 전체를 배열로 받은 후 반복
       snapshot.forEach( (childSnapshot) => {
+
+        //readUserData();
+
         //const childkey = childSnapshot.key
         const childData = childSnapshot.val();
         //console.log('리스너', childKey, childData.id, userId );
 
+        */
      //대화내용은 종류에 따라 좌/우측으로 정렬
-     if( childData.id === userId ){
-      /* 데이터베이스에 등록된 데이터의 아이디와 대화창에 접속한
-        사용자의 아이디가 일치하면 , 본인이므로 '우측' 으로 정렬한다. */
-        showDiv.push(<div className='myMsg' style={{'textAlign' : 'right' }}>
-        {childData.message}</div>);
-        
-      }else{
-        //상대방이 보낸 메세지는 좌측으로 정렬한다. 
-        showDiv.push(<div>{childData.message}</div>)
-      }
-      //스크롤바를 최하단으로 내려준다.
-      //scrollTop( chatWindow.current );
-
-      });
+  //    if( childData.id === userId ){
+  //     /* 데이터베이스에 등록된 데이터의 아이디와 대화창에 접속한
+  //       사용자의 아이디가 일치하면 , 본인이므로 '우측' 으로 정렬한다. */
       
-      //스테이트 변경해서 대화내역을 새롭게 렌더링한다.
-      setChatData( showDiv );
-    });
-  }, []);
+  //     showDiv.push(<div className='myMsg' style={{'textAlign' : 'right',backgroundColor: '#f5f5dc', color: 'blue' }}>        
+  //       <img src={faceIcon} style={{ width:"50px" }}></img>
+  //       {/* <br/>{result.date}&nbsp;&nbsp;<br/>{ result.nicName}<br/>{childData.message}</div>); */}
+  //       {/* <br/>{date2}&nbsp;&nbsp;<br/>{nicName2}<br/>{childData.message}</div>); */}
+  //       <br/>{result.date}&nbsp;&nbsp;<br/>{ result.nicName}<br/>{childData.message}</div>);
+        
+  //     }else{
+  //       //상대방이 보낸 메세지는 좌측으로 정렬한다. 
+  //       showDiv.push(<div>{childData.message}</div>)
+
+  //       //showDiv.push(<div style={{'textAlign' : 'left',backgroundColor: '#e0f7fa', color: 'blue' }}><img src={faceIcon} style={{ width:"50px" }}></img>
+  //       //<br/>{result.date}&nbsp;&nbsp;<br/>{ result.nicName}<br/>{childData.message}</div>)
+  //     }
+  //     //scrollTop( chatWindow.current );
+
+  //     });
+      
+      
+  //     setChatData( showDiv );
+  //   });
+    
+    
+
+  //   //readUserData();      
+
+  // }, []);
+
+  useEffect(() => {
+    
+    const fetchThenListen = async () => {
+    // 1. 먼저 필요한 비동기 작업 수행 (예: 사용자 정보 읽기)
+    const db = getDatabase();
+    const userSnapshot = await get(child(ref(db), `member/${userId}`));
+    
+    if (userSnapshot.exists()) {
+      const userData = userSnapshot.val();
+      setResult(userData); // 상태 업데이트
+      console.log('✔ 사용자 데이터 가져옴:', userData);
+
+      // 2. 그 후에 onValue 등록
+      const chatRef = ref(realtime, roomId);
+      onValue(chatRef, (snapshot) => {
+        // result 대신 userData 사용 → 더 안전
+        let chatList = [];
+
+      setTimeout( () => {
+        scrollTop( chatWindow.current );
+      }, 100);
+
+
+        snapshot.forEach((childSnapshot) => {
+          const message = childSnapshot.val();
+
+          if (message.id === userId) {
+            chatList.push(
+              <div className='myMsg' style={{ textAlign: 'right', backgroundColor: '#f5f5dc', color: 'blue' }}>
+                <img src={faceIcon} style={{ width: '50px' }} />
+                <br />
+                {message.date}&nbsp;&nbsp;<br />
+                {userData.nicName}<br />
+                {message.message}
+              </div>
+            );
+          } else {
+            chatList.push(<div>{message.message}</div>);
+          }
+        });
+
+        setChatData(chatList);
+      });
+    } else {
+      console.log('❌ 사용자 데이터 없음');
+    }
+  };
+
+    // 함수 실행
+    fetchThenListen();
+}, [userId, roomId]);
+
+
 
   return(<>
-    <div className='App'>
+    <div className='App' style={{          
+              backgroundImage: `url('${chatBg}')`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              //height: '100vh'
+      }}>
       <h2>Realtime 채팅</h2>
         대화명 : {userId} &nbsp;&nbsp;
         {/* X버튼을 누르는 것과 같이 창을 닫아준다. */}

@@ -41,6 +41,7 @@ function MemberView(){
 
 
   return(<>
+    <nav>
       <Link to="/memberList">목록</Link>&nbsp;&nbsp;
       <Link to={"/memberEdit/"+params.idx} >수정</Link>&nbsp;&nbsp;
       {/* <Link to={"/delete/"+params.idx}>삭제</Link> */}
@@ -59,6 +60,7 @@ function MemberView(){
 
       }}>삭제</a>
 
+    </nav>
 
     <h2 align="center">회원상세보기</h2>
             <form name="myform" onSubmit={ (e) => {

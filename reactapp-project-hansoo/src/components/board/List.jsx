@@ -87,6 +87,7 @@ function List(){
     <header>
         <h2>게시판 - 목록</h2>
     </header>
+    {/* style={{ textAlign: 'left', padding: '10px', backgroundColor: '#f8f9fa' }} */}
     <nav>
       <Link to="/write">글쓰기</Link>
     </nav>

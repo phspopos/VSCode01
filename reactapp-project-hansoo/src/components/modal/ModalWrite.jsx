@@ -90,6 +90,9 @@ function ModalWrite() {
 
     return (<>
     <div className="form-container">
+    <nav>
+      <Link to="/modalList">목록</Link>
+    </nav>
     <h2>Q&A등록</h2>
     <form id="registerForm" onSubmit={ (e) => {
         e.preventDefault();
