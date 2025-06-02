@@ -518,7 +518,16 @@ function MemberInsert(){
                     <td colSpan="2" style={{ textAlign:"center"}}>
                         <input type="submit" value="등록하기"  style={{ width: '70px', height: '30px', fontSize: '16px' }}/>&nbsp;&nbsp;
                         <input type="reset" value="새로쓰기" style={{ width: '70px', height: '30px', fontSize: '16px' }}/>&nbsp;&nbsp;
-                        <Link to="/">로그인</Link>
+                        <Link to="/" style={{
+                                          display: 'inline-block',
+                                          padding: '8px 16px',
+                                          backgroundColor: '#6c757d',  // Bootstrap의 btn-secondary 색
+                                          color: 'white',
+                                          textDecoration: 'none',
+                                          borderRadius: '4px',
+                                          fontSize: '14px',
+                                          border: 'none'
+                                        }}>로그인</Link>
                     </td>
                 </tr>
                 </tbody>

@@ -36,7 +36,3 @@ input[type=submit] { width: 100px }
 .warnings{
   color: white;background-color: red; font-size:1.2em;
 }
-
-.contWrap {
-  white-space : pre-wrap;
-}

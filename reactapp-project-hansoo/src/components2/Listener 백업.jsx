@@ -16,50 +16,6 @@ function Listener(){
   //리스너( 이벤트 수신 대기 )
   const dbRef = ref( realtime, 'member');
 
-  ///////////////////////////////////////////////////
-
-  // 페이지 관련 설정
-  const allData = fireData;
-  const itemsPerPage = 5;
-  const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = Math.ceil(allData.length / itemsPerPage);
-
-  const pageGroupSize = 5;
-  const [pageGroupIndex, setPageGroupIndex] = useState(0);
-
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = allData.slice(indexOfFirstItem, indexOfLastItem);
-
-  // 페이지 버튼 그룹 계산
-  const startPage = pageGroupIndex * pageGroupSize + 1;
-  const endPage = Math.min(startPage + pageGroupSize - 1, totalPages);
-  const visiblePages = Array.from(
-    { length: endPage - startPage + 1 },
-    (_, i) => startPage + i
-  );
-
-  const handlePageClick = (page) => {
-    setCurrentPage(page);
-    setPageGroupIndex(Math.floor((page - 1) / pageGroupSize));
-  };
-
-  const handlePrevGroup = () => {
-    if (pageGroupIndex > 0) {
-      setPageGroupIndex(pageGroupIndex - 1);
-      setCurrentPage((pageGroupIndex - 1) * pageGroupSize + 1);
-    }
-  };
-
-  const handleNextGroup = () => {
-    if ((pageGroupIndex + 1) * pageGroupSize < totalPages) {
-      setPageGroupIndex(pageGroupIndex + 1);
-      setCurrentPage((pageGroupIndex + 1) * pageGroupSize + 1);
-    }
-  };
-/////////////////////////////////////////////////////////////////////////////
-
-
   //1차 렌더링 후 내부의 코드 실행을 위한 생명주기 훅 선언
   useEffect ( () => {
     /*
@@ -116,48 +72,10 @@ function Listener(){
             <th>고유키</th>
           </tr>
         </thead>
-        {currentItems.map((item, idx) => (
-          //  key={idx}
-           <tbody>
-              {item}
-            </tbody>
-          ))}
+        <tbody>
+          {fireData}
+        </tbody>
       </table>
-      <tfoot>
-        
-      {/* 페이지네이션 */}
-      <div style={{ marginTop: '20px' }}>
-        <button onClick={handlePrevGroup} disabled={pageGroupIndex === 0}>
-          Prev
-        </button>
-
-        {visiblePages.map((pageNum) => (
-          <button
-            key={pageNum}
-            onClick={() => handlePageClick(pageNum)}
-            style={{
-              margin: '0 4px',
-              padding: '6px 12px',
-              backgroundColor: currentPage === pageNum ? '#007bff' : '#f0f0f0',
-              color: currentPage === pageNum ? 'white' : 'black',
-              border: '1px solid #ccc',
-              borderRadius: '4px',
-              cursor: 'pointer',
-            }}
-          >
-            {pageNum}
-          </button>
-        ))}
-
-        <button
-          onClick={handleNextGroup}
-          disabled={(pageGroupIndex + 1) * pageGroupSize >= totalPages}
-        >
-          Next
-        </button>
-      </div>
-      </tfoot>
-
     </div>
     
   </>);

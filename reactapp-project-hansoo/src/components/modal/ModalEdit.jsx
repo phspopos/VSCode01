@@ -196,7 +196,16 @@ function ModalEdit() {
         </tbody>
       </table>
       <div className="button-container">
-        <button type="submit">수정하기버튼</button><NavLink to="/modalList">Q&A목록보기</NavLink>&nbsp;&nbsp;   
+        <button type="submit">수정하기버튼</button><NavLink to="/modalList" style={{
+                                          display: 'inline-block',
+                                          padding: '8px 16px',
+                                          backgroundColor: '#6c757d',  // Bootstrap의 btn-secondary 색
+                                          color: 'white',
+                                          textDecoration: 'none',
+                                          borderRadius: '4px',
+                                          fontSize: '14px',
+                                          border: 'none'
+                                        }}>Q&A목록보기</NavLink>&nbsp;&nbsp;   
       </div>
     </form>
   </div>

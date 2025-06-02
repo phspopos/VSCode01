@@ -108,7 +108,16 @@ function ChatLogin(){
             <tr>
                 <td>
                     <input type="submit" value="로그인" />&nbsp;&nbsp;{/* <Link to="/memberInsert">회원가입</Link> <a href="/memberInsert">회원가입</a> */}
-                       <NavLink to="/crud">채팅등록창</NavLink><span style={{ color:"blue" }}>{str}</span>
+                       <NavLink to="/crud" style={{
+                                          display: 'inline-block',
+                                          padding: '8px 16px',
+                                          backgroundColor: '#6c757d',  // Bootstrap의 btn-secondary 색
+                                          color: 'white',
+                                          textDecoration: 'none',
+                                          borderRadius: '4px',
+                                          fontSize: '14px',
+                                          border: 'none'
+                                        }}>채팅등록창</NavLink><span style={{ color:"blue" }}>{str}</span>
                </td>
             </tr>
             </tbody>

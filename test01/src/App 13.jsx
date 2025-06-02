@@ -1,17 +1,13 @@
 import {useState} from 'react';
 //import './App.css';
 
+//모듈화 한 컴포넌트 임포트
 import NavList from './component/navigation/NavList';
 import NavView from './component/navigation/NavView';
 import NavWrite from './component/navigation/NavWrite';
 import ArticleList from './component/article/ArticleList';
 import ArticleView from './component/article/ArticleView';
 import ArticleWrite from './component/article/ArticleWrite';
-
-
-const fx3 = (a,b ) =>{
-  console.error('에러발생됨');
-}
 
 function ReadyComp(){
   return(<>
@@ -43,9 +39,9 @@ function App(){
   ];
  
   const [ mode, setMode ] = useState('list');
-  const[ no, setNo ] = useState(null);
+  
 
-  let articleComp, navComp, titleVar, selectRow;
+  let articleComp, navComp, titleVar;
 
   if( mode === 'list' ){
     titleVar = '게시판-목록(props)';
@@ -56,7 +52,6 @@ function App(){
     articleComp = <ArticleList boardData = {boardData} onChangeMode={(no) => {
       console.log("선택한 게시물 번호 : " + no);
       setMode('view');
-      setNo(no);
     }}></ArticleList>;
 
   }else if( mode === 'view' ){
@@ -64,14 +59,7 @@ function App(){
     navComp = <NavView onChangeMode={ (pmode) => {
       setMode(pmode);
     }}></NavView>
-    console.log("현재no : " , no, typeof(no));
-    for( let i = 0; i <boardData.length; i++ ){
-      if( no === boardData[i].no ){
-        selectRow = boardData[i];
-      }
-    }
-
-    articleComp = <ArticleView selectRow={ selectRow }></ArticleView>;
+    articleComp = <ArticleView></ArticleView>;
   
   }else if( mode === 'write' ){
     titleVar = "게시판-쓰기(props)";

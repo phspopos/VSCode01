@@ -1,77 +1,136 @@
-import { useEffect } from "react";
-import { useState } from "react";
-
-import { storage } from './storageConfig';
-import { uploadBytes, ref, listAll, getDownloadURL } from 'firebase/storage';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { firestore } from './firestoreConfig';
+import { collection, getDocs } from 'firebase/firestore';
 
 function App() {
+  const [showData, setShowData] = useState([]);
 
-    const listRef = ref( storage, '' );
+  // 페이지 관련 설정
+  const allData = showData;
+  const itemsPerPage = 5;
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalPages = Math.ceil(allData.length / itemsPerPage);
 
-    const [ fileLists, setFileLists ] = useState([]);
-    const [ renderFlag, setRenderFlag ] = useState(false);
+  const pageGroupSize = 5;
+  const [pageGroupIndex, setPageGroupIndex] = useState(0);
 
-    useEffect( () => {
-      
-      let fileRows = [];
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = allData.slice(indexOfFirstItem, indexOfLastItem);
 
-      listAll(listRef)
-        .then( (res) => {
-          res.prefixes.forEach( (folderRef) => {
-            console.log("폴더", folderRef);
-          });
-          res.items.forEach( (itemRef) => {
-            const deleteRef = ref( storage, itemRef.fullPath );
+  // 페이지 버튼 그룹 계산
+  const startPage = pageGroupIndex * pageGroupSize + 1;
+  const endPage = Math.min(startPage + pageGroupSize - 1, totalPages);
+  const visiblePages = Array.from(
+    { length: endPage - startPage + 1 },
+    (_, i) => startPage + i
+  );
 
-            fileRows.push(
-              <tr key={itemRef.name}>
-                <td>{itemRef.bucket}</td>
-                <td>{itemRef.fullPath}</td>
-                <td>{itemRef.name}</td>
-                <td><button type="button" onClick={ (e) => {
-                    
-                    if( window.confirm("삭제할까요?") ){
-                      deleteObject( deleteRef ).then( () => {
-                        console.log("파일 삭제 성공");
-                        setRenderFlag(!renderFlag);
-                      })
-                      .catch( (error) => {
-                        console.log("파일 삭제 실패");
-                      });
-                    }
-                }}>삭제</button></td>
-              </tr>
-            );
-          });
-          setFileLists(fileRows);
-        })
-        .catch( (error) => {
-          console.log("에러발생", error);
-        });
+  const handlePageClick = (page) => {
+    setCurrentPage(page);
+    setPageGroupIndex(Math.floor((page - 1) / pageGroupSize));
+  };
 
-    }, [renderFlag]);
-  
-    console.log('랜더링');
-  
-  return (<>
-    <div className="App">
-      <h2>Firebase = storage App</h2>
-      <h3>파일 목록 및 삭제</h3>
-      <table>
-        <thead>
-          <tr>
-            <td>bucket</td>
-            <td>fullPath</td>
-            <td>name</td>
-            <td>삭제</td>
+  const handlePrevGroup = () => {
+    if (pageGroupIndex > 0) {
+      setPageGroupIndex(pageGroupIndex - 1);
+      setCurrentPage((pageGroupIndex - 1) * pageGroupSize + 1);
+    }
+  };
+
+  const handleNextGroup = () => {
+    if ((pageGroupIndex + 1) * pageGroupSize < totalPages) {
+      setPageGroupIndex(pageGroupIndex + 1);
+      setCurrentPage((pageGroupIndex + 1) * pageGroupSize + 1);
+    }
+  };
+
+  useEffect(() => {
+    const getCollection = async () => {
+      let trArray = [];
+
+      const querySnapshot = await getDocs(collection(firestore, "board"));
+      querySnapshot.forEach((doc) => {
+        let memberInfo = doc.data();
+
+        trArray.push(
+          <tr key={doc.id}>
+            <td>{doc.id}</td>
+            <td>{memberInfo.pass}</td>
+            <td>{memberInfo.writer}</td>
+            <td><Link to={'/view/' + doc.id}>{memberInfo.title}</Link></td>
+            <td>{memberInfo.contents}</td>
+            <td>{memberInfo.date}</td>
           </tr>
-        </thead>
-        <tbody>
-          {fileLists}
-        </tbody>
-      </table>
+        );
+      });
+      return trArray;
+    };
+
+    getCollection().then((result) => {
+      setShowData(result);
+    });
+  }, []);
+
+  return (
+    <div className="board-container">
+      <h2>Pagination (5개 단위 페이지 이동)</h2>
+
+      <article>
+        <table className="board-table" id="boardTable" style={{ width: "900px" }}>
+          <thead>
+            <tr>
+              <th>아이디</th>
+              <th>패스워드</th>
+              <th>작성자</th>
+              <th>제목</th>
+              <th>내용</th>
+              <th>날짜</th>
+            </tr>
+          </thead>
+
+          {currentItems.map((item, idx) => (
+            <tbody key={idx}>
+              {item}
+            </tbody>
+          ))}
+        </table>
+      </article>
+
+      {/* 페이지네이션 */}
+      <div style={{ marginTop: '20px' }}>
+        <button onClick={handlePrevGroup} disabled={pageGroupIndex === 0}>
+          Prev
+        </button>
+
+        {visiblePages.map((pageNum) => (
+          <button
+            key={pageNum}
+            onClick={() => handlePageClick(pageNum)}
+            style={{
+              margin: '0 4px',
+              padding: '6px 12px',
+              backgroundColor: currentPage === pageNum ? '#007bff' : '#f0f0f0',
+              color: currentPage === pageNum ? 'white' : 'black',
+              border: '1px solid #ccc',
+              borderRadius: '4px',
+              cursor: 'pointer',
+            }}
+          >
+            {pageNum}
+          </button>
+        ))}
+
+        <button
+          onClick={handleNextGroup}
+          disabled={(pageGroupIndex + 1) * pageGroupSize >= totalPages}
+        >
+          Next
+        </button>
+      </div>
     </div>
-  </>); 
+  );
 }
 
-export default App ;
+export default App;
