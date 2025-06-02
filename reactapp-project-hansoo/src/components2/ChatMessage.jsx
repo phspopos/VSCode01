@@ -244,7 +244,12 @@ function ChatMessage(){
               </div>
             );
           } else {
-            chatList.push(<div>{message.message}</div>);
+            chatList.push(
+                <div className='myMsg' style={{ textAlign: 'left', backgroundColor: '#f0f8ff', color: 'black' }}>
+                  <img src={faceIcon} style={{ width: '50px' }} /><br />
+                  {message.message}
+                </div>
+              );
           }
         });
 

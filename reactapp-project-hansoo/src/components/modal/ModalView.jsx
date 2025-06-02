@@ -154,6 +154,7 @@ function ModalWindow(props) {
       } */
       //commentInsert();
     }
+    //window.self.close();
   }
 
   return (<>

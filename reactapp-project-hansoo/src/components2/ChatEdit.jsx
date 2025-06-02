@@ -29,7 +29,7 @@ import Navi from './Navi';
       date: userDate,
       
     };
-
+    
     //console.log('111');
     //아이디로 지정된 데이터를 찾아서 수정한다.
     const updates = {};
@@ -96,6 +96,22 @@ function ChatEdit(){
 
   }, []);
 
+   //데이터 삭제2
+  function deleteUserData( userId ){
+    //alert("딜리트 아이디 : "+userId);
+    //remove 함수를 통해 데이터를 삭제   
+    if( confirm("삭제 하시겠습니까?") ){
+      remove( ref( realtime, 'member/'+userId ))
+      .then( () => {
+      console.log("삭제완료");
+      })
+      .catch( (error) => {
+      console.log("삭제실패", error);
+      });
+
+      navigate("/listener");
+    }  
+  }
   
 
   
@@ -184,7 +200,11 @@ function ChatEdit(){
               }}/></td>
             </tr>            
             <tr>            
-              <td colSpan="2"><input type='submit' value="수정하기" style={{ width: '100px', height: '50px', fontSize: '16px' }} /></td>
+              <td colSpan="2">
+                <input type='submit' value="수정하기" style={{ width: '100px', height: '50px', fontSize: '16px' }} />&nbsp;&nbsp;
+                <input type='button' value="삭제" onClick={() => deleteUserData(id) } style={{ width: '100px', height: '50px', fontSize: '16px' }} />
+                {/* onClick={() => insert() */}
+              </td>
             </tr>
           </tbody>
         </table>

@@ -4,6 +4,7 @@ import { getDatabase, child, get, push, update, remove } from 'firebase/database
 import Navi from './Navi';
 import { useState } from 'react';
 import '../modalWrite.css';
+import { NavLink } from 'react-router-dom';
 
 function RealtimeCRUD() {
   //database 연결확인
@@ -223,7 +224,20 @@ function RealtimeCRUD() {
               <td><input type='text' name='nicName' /></td>
             </tr>            
             <tr>            
-              <td colSpan="2"><input type='submit' value="사용자등록" style={{ width: '100px', height: '50px', fontSize: '16px' }} /></td>
+              <td colSpan="2">
+                <input type='submit' value="사용자등록" style={{ width: '100px', height: '50px', fontSize: '16px' }} />
+                <NavLink to="/listener" style={{
+                                          display: 'inline-block',
+                                          padding: '8px 16px',
+                                          backgroundColor: '#6c757d',  // Bootstrap의 btn-secondary 색
+                                          color: 'white',
+                                          textDecoration: 'none',
+                                          borderRadius: '4px',
+                                          fontSize: '14px',
+                                          border: 'none'
+                                        }}>리스트상세보기</NavLink>
+              
+              </td>
             </tr>
           </tbody>
         </table>

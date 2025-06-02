@@ -40,3 +40,12 @@ input[type=submit] { width: 100px }
 .contWrap {
   white-space : pre-wrap;
 }
+
+/*가운데 정렬 추가
+.center-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 8px; 
+  margin-top: 16px;
+}
+*/

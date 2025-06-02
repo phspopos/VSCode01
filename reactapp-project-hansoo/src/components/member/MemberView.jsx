@@ -151,6 +151,7 @@ function MemberView(){
                                           fontSize: '14px',
                                           border: 'none'
                                         }}>회원리스트</Link>
+                                        
                         </td>
                     </tr>
                     </tbody>

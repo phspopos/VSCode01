@@ -39,6 +39,7 @@ const memberWrite = async ( p_collection, p_id, p_pass, p_writer, p_title, p_con
 }
 
 
+
 function Write(){
 
   let navigete = useNavigate();
@@ -145,6 +146,7 @@ function Write(){
         </tbody>
       </table>
         <input type="submit" value="등록"/>
+        
     </form>
     </article> 
   </div>

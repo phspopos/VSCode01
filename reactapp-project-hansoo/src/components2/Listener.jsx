@@ -101,10 +101,22 @@ function Listener(){
 
   return(<>
     <div className="App">
-      <Navi></Navi>
+      <Navi></Navi>      
       {/* <h2>Firebase - Realtime Database App</h2> */}
       {/* <h3>02.Listener</h3> */}
       <h3>상세보기 리스트</h3>
+
+      <NavLink to="/crud" style={{
+                                          display: 'inline-block',
+                                          padding: '8px 16px',
+                                          backgroundColor: '#6c757d',  // Bootstrap의 btn-secondary 색
+                                          color: 'white',
+                                          textDecoration: 'none',
+                                          borderRadius: '4px',
+                                          fontSize: '14px',
+                                          border: 'none'
+                                        }}>등록하기</NavLink>
+
       <table border="1" className="table table-bordered">
         <thead>
           <tr className="text-center">
@@ -123,7 +135,7 @@ function Listener(){
             </tbody>
           ))}
       </table>
-      <tfoot>
+      {/* <tfoot> */}
         
       {/* 페이지네이션 */}
       <div style={{ marginTop: '20px' }}>
@@ -156,7 +168,7 @@ function Listener(){
           Next
         </button>
       </div>
-      </tfoot>
+      {/* </tfoot> */}
 
     </div>
     

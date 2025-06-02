@@ -53,6 +53,8 @@ const ChatStart = () => {
       }else{
         alert("로그인 해주세요");
         navigate("/chatLogin");
+        
+        
       }
     
       }
@@ -62,7 +64,9 @@ const ChatStart = () => {
 
   }, []);
   
-  
+  function removeSession(){
+    sessionStorage.removeItem("id2");    
+  } 
 
   
   //input 태그의 DOM 에 접근하기 위해 useRef로 변수선언
@@ -75,7 +79,7 @@ const ChatStart = () => {
   //접속자의 아이디
   //const refId = useRef();
 /*
-  open() 함수를 이용해서 채팅창을 팝업으로 오픈한다<div className="ㅎㄴ"></div>
+  open() 함수를 이용해서 채팅창을 팝업으로 오픈한다
   형식] open( 팝업창의 요청 url, 창의이름, 창의속성);
   두번재 인수린 '창의이름'에 이름을 부여하면, 새로운 창을 열었을때
   항상 같은 위치에서 열리게 된다. 즉 새로운 창을  열수없으므로 여기서는
@@ -96,9 +100,10 @@ const ChatStart = () => {
     var room2 = document.getElementById("roomId").value;
     var userId = document.getElementById("userId").value;
      
-
-    window.open(`/chat/talk?roomId=${room2}&userId=${userId}`, '' , 'width=500, height=700');
+    //http://phspopos.dothome.co.kr/chat/talk
+    window.open(`#/chat/talk?roomId=${room2}&userId=${userId}`, '' , 'width=500, height=700');
     //console.log('2222');
+    //window.open(`http://phspopos.dothome.co.kr/chat/talk?roomId=${room2}&userId=${userId}`, '' , 'width=500, height=700');
   }
 
   return(<>
@@ -125,6 +130,9 @@ const ChatStart = () => {
         </tr>
         <tr>        
           <td colSpan="2"><button type="button" onClick={openChatWin}>채팅시작</button></td>        
+        
+          {/* <button onClick={removeSession}>로그아웃</button> */}   
+        
         </tr>
       </tbody>  
     </table>

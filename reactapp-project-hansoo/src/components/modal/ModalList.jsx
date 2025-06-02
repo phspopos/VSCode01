@@ -193,6 +193,10 @@ function ModalList() {
   
   }, [setShowData]);
 
+  function reloadPage() {
+    window.location.reload();
+  }
+
 
   return(<>
 
@@ -206,6 +210,14 @@ function ModalList() {
         let sName = e.target.sName.value;
 
         console.log( search + " = " + sName );
+
+        if( sName == '' ){
+          
+          alert("검색어를 입력해주세요");
+          e.target.sName.focus();
+
+          return false;
+        }
 
         // //getCollection( sf, ss );
         // if( sName == null ){
@@ -233,11 +245,13 @@ function ModalList() {
             <option value="name">이름</option>            
           </select>&nbsp;&nbsp;&nbsp;
           
-          <input type='text' name='sName' style={{ width: '150px', height: '25px', fontSize: '16px' }}/>&nbsp;&nbsp;&nbsp;
+          <input type='text' name='sName' style={{ width: '150px', height: '30px', fontSize: '16px' }}/>&nbsp;&nbsp;&nbsp;
           <button type='submit' className='btn btn-secondary'>조회</button>&nbsp;&nbsp;&nbsp;
+          <input type="button" onClick={ reloadPage } value="목록" 
+         style={{ width: '70px', height: '30px', fontSize: '16px' }}/>
           {/* <NavLink to="/memberList">회원정보리스트</NavLink>&nbsp;&nbsp; */}
           {/* <button type='button' onClick={list} className='btn btn-secondary'>목록</button>&nbsp;&nbsp;&nbsp; */}
-          <a href="/modalList"  style={{
+          {/* <a href="/modalList"  style={{
                                           display: 'inline-block',
                                           padding: '8px 16px',
                                           backgroundColor: '#6c757d',  // Bootstrap의 btn-secondary 색
@@ -246,7 +260,7 @@ function ModalList() {
                                           borderRadius: '4px',
                                           fontSize: '14px',
                                           border: 'none'
-                                        }}>목록</a>
+                                        }}>목록</a> */}
         </div>
       </form>
       {/* ------------------------------------------------------------- */}
@@ -271,9 +285,9 @@ function ModalList() {
           ))}
     </table>
 
-    <tfoot>
+    {/* <tfoot> */}
       {/* 페이지네이션 */}
-      <div style={{ marginTop: '20px' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', textAlign: 'center'  }}>
         <button onClick={handlePrevGroup} disabled={pageGroupIndex === 0}>
           Prev
         </button>
@@ -304,7 +318,7 @@ function ModalList() {
         </button>
       </div>
 
-    </tfoot>
+    {/* </tfoot> */}
 
   </div>
   </>);

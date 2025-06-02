@@ -1,4 +1,4 @@
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 //import {firestore} from './firestoreConfig';
 import { firestore } from '../../firestoreConfig';
@@ -7,11 +7,8 @@ import '../../memberList.css';
 
 
 
-
 function List(){
   
-  let navigate = useNavigate();
-
   const [showData, setShowData] = useState([]);
 
     const getCollectionSeach = async ( search, sName ) => {
@@ -129,15 +126,8 @@ function List(){
   };
 /////////////////////////////////////////////////////////////////////
 
-const [trigger, setTrigger] = useState(0); // 트리거용 상태
-
   useEffect(() => {
-
-    //setShowData([]);
-    
-    console.log('useEffect 실행되나 ㅎㅎ');
-    const getCollection = async () => {   
-
+    const getCollection = async () => {
       let trArray = [];
 
       const querySnapshot = await getDocs(collection(firestore, "board"));
@@ -163,48 +153,6 @@ const [trigger, setTrigger] = useState(0); // 트리거용 상태
     });
   }, []);
 
-  /*
-  function listReset(){
-    //setShowData({});
-    //getCollection();
-    
-    //getCollection2();
-    //setTrigger(prev => prev + 1); 
-    setShowData([]);
-
-    getCollection2().then((result) => {
-      setShowData(result);
-    });
-
-
-  }
-*/
-// const getCollection2 = async () => {
-//       let trArray = [];
-
-//       const querySnapshot = await getDocs(collection(firestore, "board"));
-//       querySnapshot.forEach((doc) => {
-//         let memberInfo = doc.data();
-
-//         trArray.push(
-//           <tr key={doc.id}>
-//             <td>{doc.id}</td>
-//             <td>{memberInfo.pass}</td>
-//             <td>{memberInfo.writer}</td>
-//             <td><Link to={'/view/' + doc.id}>{memberInfo.title}</Link></td>
-//             <td>{memberInfo.contents}</td>
-//             <td>{memberInfo.date}</td>
-//           </tr>
-//         );
-//       });
-//       //setShowData(trArray);
-//       //return trArray;
-//     }
-
-  function reloadPage() {
-    window.location.reload();
-  }
-
   return(<>
   
    <div className="board-container">
@@ -216,20 +164,11 @@ const [trigger, setTrigger] = useState(0); // 트리거용 상태
         <form onSubmit={ (e) => {
         e.preventDefault();
 
-        
-
         let search = e.target.search.value;
         let sName = e.target.sName.value;
 
         console.log( search + " = " + sName );
 
-        if( sName == '' ){
-          
-          alert("검색어를 입력해주세요");
-          e.target.sName.focus();
-
-          return false;
-        }
         // //getCollection( sf, ss );
         // if( sName == null ){
         //   getCollection();
@@ -256,11 +195,11 @@ const [trigger, setTrigger] = useState(0); // 트리거용 상태
             <option value="name">이름</option>            
           </select>&nbsp;&nbsp;&nbsp;
           
-          <input type='text' name='sName' style={{ width: '150px', height: '30px', fontSize: '16px' }}/>&nbsp;&nbsp;&nbsp;
+          <input type='text' name='sName' style={{ width: '150px', height: '25px', fontSize: '16px' }}/>&nbsp;&nbsp;&nbsp;
           <button type='submit' className='btn btn-secondary'>조회</button>&nbsp;&nbsp;&nbsp;
           {/* <NavLink to="/memberList">회원정보리스트</NavLink>&nbsp;&nbsp; */}
           {/* <button type='button' onClick={list} className='btn btn-secondary'>목록</button>&nbsp;&nbsp;&nbsp; */}
-          {/* <a href="/list"  style={{
+          <a href="/list"  style={{
                                           display: 'inline-block',
                                           padding: '8px 16px',
                                           backgroundColor: '#6c757d',  // Bootstrap의 btn-secondary 색
@@ -269,30 +208,7 @@ const [trigger, setTrigger] = useState(0); // 트리거용 상태
                                           borderRadius: '4px',
                                           fontSize: '14px',
                                           border: 'none'
-                                        }}>목록</a> */}
-          
-            
-          {/* <NavLink to="/list"  style={{
-                                          display: 'inline-block',
-                                          padding: '8px 16px',
-                                          backgroundColor: '#6c757d',  // Bootstrap의 btn-secondary 색
-                                          color: 'white',
-                                          textDecoration: 'none',
-                                          borderRadius: '4px',
-                                          fontSize: '14px',
-                                          border: 'none'
-                                        }}>목록</NavLink>                               */}
-
-            {/* <button onClick={() => {
-                  window.location.hash = '#/list';
-            }}>같은 페이지 이동</button> */}
-            
-
-            {/* <button onClick={ listReset } >목록</button> */}
-         <input type="button" onClick={ reloadPage } value="목록" 
-         style={{ width: '70px', height: '30px', fontSize: '16px' }}/>
-            
-            
+                                        }}>목록</a>
         </div>
       </form>
       <h2>게시판</h2>
@@ -317,10 +233,9 @@ const [trigger, setTrigger] = useState(0); // 트리거용 상태
         </table>
       </article> 
 
-      {/* <tfoot> */}
-           
+      <tfoot>
+    
       {/* 페이지네이션 style={{ marginTop: '20px' }} */}
-      {/* <div style={{ display: 'flex', justifyContent: 'center', textAlign: 'center'  }}> */}
       <div style={{ display: 'flex', justifyContent: 'center', textAlign: 'center'  }}>
 
         <button onClick={handlePrevGroup} disabled={pageGroupIndex === 0}>
@@ -352,8 +267,8 @@ const [trigger, setTrigger] = useState(0); // 트리거용 상태
           Next
         </button>
       </div> 
-      
-      {/* </tfoot> */}
+           
+      </tfoot>
 
     </div>
   </>);

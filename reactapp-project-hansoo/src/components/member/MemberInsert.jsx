@@ -518,7 +518,7 @@ function MemberInsert(){
                     <td colSpan="2" style={{ textAlign:"center"}}>
                         <input type="submit" value="등록하기"  style={{ width: '70px', height: '30px', fontSize: '16px' }}/>&nbsp;&nbsp;
                         <input type="reset" value="새로쓰기" style={{ width: '70px', height: '30px', fontSize: '16px' }}/>&nbsp;&nbsp;
-                        <Link to="/" style={{
+                        <Link to="/login" style={{
                                           display: 'inline-block',
                                           padding: '8px 16px',
                                           backgroundColor: '#6c757d',  // Bootstrap의 btn-secondary 색
