@@ -11,6 +11,79 @@ function List(){
   
   const [showData, setShowData] = useState([]);
 
+    const getCollectionSeach = async ( search, sName ) => {
+    
+    //  if( sName == null ){
+    //    navigate("/memberList");
+    //  }
+
+    let getRows = [];
+
+    if( search === "id" ){
+
+      const docRef = doc( firestore, "board", sName );
+      const docSnap = await getDoc(docRef);
+
+      if( docSnap.exists() ){
+        console.log("Document data : ", docSnap.data() );
+        getRows.push( docSnap.data() );
+      
+      }else{
+        console.log("No such document!");
+      }
+
+    }else if( search === "name" ){
+      
+      const memberRef = collection( firestore, "board");
+      console.log("memberRef", memberRef );
+      
+      const q = query( memberRef, where("writer","==",sName ));
+      const querySnapshot = await getDocs(q);
+      console.log("Document data : ", querySnapshot);
+
+      querySnapshot.forEach( (doc) => {
+        console.log("반복인출", doc.id, doc.data() );
+        getRows.push( doc.data() );
+      });
+
+    }else if( search === "title" ){
+      
+      const memberRef = collection( firestore, "board");
+      console.log("memberRef", memberRef );
+      
+      const q = query( memberRef, where("title","==",sName ));
+      const querySnapshot = await getDocs(q);
+      console.log("Document data : ", querySnapshot);
+
+      querySnapshot.forEach( (doc) => {
+        console.log("반복인출", doc.id, doc.data() );
+        getRows.push( doc.data() );
+      });
+
+    }
+
+    console.log(" 값 1111 "+ getRows );
+    let trArray = [];  
+   
+    getRows.forEach( (row) => {
+      trArray.push(
+        <tr key={row.id}>
+            <td>{row.id}</td>
+            <td>{row.pass}</td>
+            <td>{row.writer}</td>
+            <td><Link to={'/view/' + row.id}>{row.title}</Link></td>
+            <td>{row.contents}</td>
+            <td>{row.date}</td>
+          </tr>
+      );
+    });
+
+    setShowData(trArray);
+
+  }
+
+
+
   //////////////////////////////////////////////////////////////
   // 페이지 관련 설정
   const allData = showData;
@@ -86,7 +159,59 @@ function List(){
       {/* <h2>Pagination (5개 단위 페이지 이동)</h2> */}
       <nav>
         <Link to="/write">글쓰기</Link>
-      </nav>      
+      </nav>
+      
+        <form onSubmit={ (e) => {
+        e.preventDefault();
+
+        let search = e.target.search.value;
+        let sName = e.target.sName.value;
+
+        console.log( search + " = " + sName );
+
+        // //getCollection( sf, ss );
+        // if( sName == null ){
+        //   getCollection();
+        // }else{
+          
+        // }
+        getCollectionSeach(search, sName);
+        
+
+      }}>
+        <div id='myForm' style={{ textAlign: 'center' }}>
+          <select name='search' style={{
+                  padding: '6px 12px',
+                  fontSize: '14px',
+                  border: '1px solid #ccc',
+                  borderRadius: '4px',
+                  backgroundColor: 'white',    
+                  backgroundPosition: 'right 10px center',
+                  backgroundSize: '16px',
+                  cursor: 'pointer',
+          }}>
+            <option value="title">제목으로 검색</option>            
+            <option value="id" size="100">아이디</option>
+            <option value="name">이름</option>            
+          </select>&nbsp;&nbsp;&nbsp;
+          
+          <input type='text' name='sName' style={{ width: '150px', height: '25px', fontSize: '16px' }}/>&nbsp;&nbsp;&nbsp;
+          <button type='submit' className='btn btn-secondary'>조회</button>&nbsp;&nbsp;&nbsp;
+          {/* <NavLink to="/memberList">회원정보리스트</NavLink>&nbsp;&nbsp; */}
+          {/* <button type='button' onClick={list} className='btn btn-secondary'>목록</button>&nbsp;&nbsp;&nbsp; */}
+          <a href="/list"  style={{
+                                          display: 'inline-block',
+                                          padding: '8px 16px',
+                                          backgroundColor: '#6c757d',  // Bootstrap의 btn-secondary 색
+                                          color: 'white',
+                                          textDecoration: 'none',
+                                          borderRadius: '4px',
+                                          fontSize: '14px',
+                                          border: 'none'
+                                        }}>목록</a>
+        </div>
+      </form>
+      <h2>게시판</h2>
       <article>
         <table className="board-table" id="boardTable" style={{ width: "900px" }}>
           <thead>
@@ -106,8 +231,7 @@ function List(){
             </tbody>
           ))}
         </table>
-      </article>
-
+      </article>                 
       <tfoot> 
       {/* 페이지네이션 style={{ marginTop: '20px' }} */}
       <div style={{ display: 'flex', justifyContent: 'center', textAlign: 'center'  }}>
@@ -127,7 +251,7 @@ function List(){
               color: currentPage === pageNum ? 'white' : 'black',
               border: '1px solid #ccc',
               borderRadius: '4px',
-              cursor: 'pointer',
+              cursor: 'pointer',              
             }}
           >
             {pageNum}

@@ -244,7 +244,7 @@ function MemberList (){
       </form>
       {/* ------------------------------------- */}
 
-      <h2>게시판</h2>
+      <h2>회원정보 게시판</h2>
       <table className="board-table" width="700">
         <thead>
           <tr>

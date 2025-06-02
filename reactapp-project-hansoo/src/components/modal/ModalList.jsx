@@ -37,6 +37,77 @@ function ModalList() {
 
   const [ showData, setShowData ] = useState([]);
   
+      const getCollectionSeach = async ( search, sName ) => {
+    
+    //  if( sName == null ){
+    //    navigate("/memberList");
+    //  }
+
+    let getRows = [];
+
+    if( search === "id" ){
+
+      const docRef = doc( firestore, "modalBoard", sName );
+      const docSnap = await getDoc(docRef);
+
+      if( docSnap.exists() ){
+        console.log("Document data : ", docSnap.data() );
+        getRows.push( docSnap.data() );
+      
+      }else{
+        console.log("No such document!");
+      }
+
+    }else if( search === "name" ){
+      
+      const memberRef = collection( firestore, "modalBoard");
+      console.log("memberRef", memberRef );
+      
+      const q = query( memberRef, where("name","==",sName ));
+      const querySnapshot = await getDocs(q);
+      console.log("Document data : ", querySnapshot);
+
+      querySnapshot.forEach( (doc) => {
+        console.log("반복인출", doc.id, doc.data() );
+        getRows.push( doc.data() );
+      });
+
+    }else if( search === "title" ){
+      
+      const memberRef = collection( firestore, "modalBoard");
+      console.log("memberRef", memberRef );
+      
+      const q = query( memberRef, where("title","==",sName ));
+      const querySnapshot = await getDocs(q);
+      console.log("Document data : ", querySnapshot);
+
+      querySnapshot.forEach( (doc) => {
+        console.log("반복인출", doc.id, doc.data() );
+        getRows.push( doc.data() );
+      });
+
+    }
+
+    console.log(" 값 1111 "+ getRows );
+    let trArray = [];  
+   
+    getRows.forEach( (row) => {
+      trArray.push(
+        <tr key={row.no}>            
+            <td>{row.no}</td>
+            <td>{row.id}</td>
+            <td>{row.name}</td>
+            <td><Link to={'/modalView/'+row.id+"/"+row.no} >{row.title}</Link></td>            
+            <td>{ formatDateOrTime(row.date) }</td>
+          </tr>
+      );
+    });
+
+    setShowData(trArray);
+
+  }
+
+
   ///////////////////////////////////////////////////
 
 
@@ -124,8 +195,65 @@ function ModalList() {
 
 
   return(<>
+
+  
+    {/* ------------------------------------------------------------- */}
     <div className="list-container">
+      <form onSubmit={ (e) => {
+        e.preventDefault();
+
+        let search = e.target.search.value;
+        let sName = e.target.sName.value;
+
+        console.log( search + " = " + sName );
+
+        // //getCollection( sf, ss );
+        // if( sName == null ){
+        //   getCollection();
+        // }else{
+          
+        // }
+        getCollectionSeach(search, sName);
+        
+
+      }}>
+        <div id='myForm' style={{ textAlign: 'center' }}>
+          <select name='search' style={{
+                  padding: '6px 12px',
+                  fontSize: '14px',
+                  border: '1px solid #ccc',
+                  borderRadius: '4px',
+                  backgroundColor: 'white',    
+                  backgroundPosition: 'right 10px center',
+                  backgroundSize: '16px',
+                  cursor: 'pointer',
+          }}>
+            <option value="title">제목으로 검색</option>            
+            <option value="id" size="100">아이디</option>
+            <option value="name">이름</option>            
+          </select>&nbsp;&nbsp;&nbsp;
+          
+          <input type='text' name='sName' style={{ width: '150px', height: '25px', fontSize: '16px' }}/>&nbsp;&nbsp;&nbsp;
+          <button type='submit' className='btn btn-secondary'>조회</button>&nbsp;&nbsp;&nbsp;
+          {/* <NavLink to="/memberList">회원정보리스트</NavLink>&nbsp;&nbsp; */}
+          {/* <button type='button' onClick={list} className='btn btn-secondary'>목록</button>&nbsp;&nbsp;&nbsp; */}
+          <a href="/modalList"  style={{
+                                          display: 'inline-block',
+                                          padding: '8px 16px',
+                                          backgroundColor: '#6c757d',  // Bootstrap의 btn-secondary 색
+                                          color: 'white',
+                                          textDecoration: 'none',
+                                          borderRadius: '4px',
+                                          fontSize: '14px',
+                                          border: 'none'
+                                        }}>목록</a>
+        </div>
+      </form>
+      {/* ------------------------------------------------------------- */}
     <h2>Q&A 리스트</h2>
+    <nav>
+      <Link to="/modalWrite">글쓰기</Link>
+    </nav>
     <table className="data-table">
       <thead>
         <tr>
