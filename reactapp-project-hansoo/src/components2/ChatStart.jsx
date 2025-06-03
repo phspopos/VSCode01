@@ -11,6 +11,7 @@ const ChatStart = () => {
 
   let navigate =  useNavigate();
   const [ result , setResult ] = useState([]);
+  let userId;
 
   useEffect(() => {
 
@@ -22,7 +23,7 @@ const ChatStart = () => {
       //console.log('111'+ dbRef );
       //노드에 등록된 아이디가 있는지 확인한 후 데이터를 가져온다.
       
-      var userId = sessionStorage.getItem("id2");
+      userId = sessionStorage.getItem("id2");
       console.log("챗 아이디 "+ userId);
 
       if( userId !== null ){
@@ -53,8 +54,6 @@ const ChatStart = () => {
       }else{
         alert("로그인 해주세요");
         navigate("/chatLogin");
-        
-        
       }
     
       }
@@ -64,8 +63,12 @@ const ChatStart = () => {
 
   }, []);
   
-  function removeSession(){
-    sessionStorage.removeItem("id2");    
+  function removeSession(){ 
+    if( confirm("로그아웃 하시겠습니까?") ){
+      sessionStorage.removeItem("id2");
+      navigate("/chatLogin");    
+    } 
+    
   } 
 
   
@@ -129,10 +132,10 @@ const ChatStart = () => {
           <td><input type="text" name="userId"  id="userId" value={result.id} /></td>        
         </tr>
         <tr>        
-          <td colSpan="2"><button type="button" onClick={openChatWin}>채팅시작</button></td>        
-        
-          {/* <button onClick={removeSession}>로그아웃</button> */}   
-        
+          <td colSpan="2">
+            <button type="button" onClick={openChatWin}>채팅시작</button>&nbsp;&nbsp;
+            <button type="button" onClick={removeSession}>로그아웃</button>
+            </td>        
         </tr>
       </tbody>  
     </table>
